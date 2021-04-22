@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 st.title('Easy Spectre Viewer')
-Path=st.sidebar.file_uploader('Excelファイル')
+Path=st.file_uploader('Excelファイル')
 
 def get_spectre(Sheet_name,i):
     df=pd.read_excel(Data,sheet_name=Sheet_name,skiprows=skip_rows)
