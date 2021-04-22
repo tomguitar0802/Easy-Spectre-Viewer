@@ -5,12 +5,10 @@ import matplotlib.pyplot as plt
 st.title('Easy Spectre Viewer')
 Path=st.sidebar.file_uploader('Excelファイル')
 
-#@st.cache
 def get_spectre(Sheet_name,i):
     df=pd.read_excel(Data,sheet_name=Sheet_name,skiprows=skip_rows)
     df=pd.DataFrame({x:df[x],y:df[y]/max(df[y])*100})
     ax[i].bar(df[x],df[y])
-    #ax[i].grid(axis="y")
 
 if Path is not None:
     Data=pd.ExcelFile(Path)
@@ -30,4 +28,4 @@ if Path is not None:
     plt.ticklabel_format(useOffset=False,useMathText=True)
     st.pyplot(fig)
 else:
-    st.write("The spectre will be displayed when you upload the Excel file.")
+    st.write("The spectre will be displayed when you upload Excel file.")
