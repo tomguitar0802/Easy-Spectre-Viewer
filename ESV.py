@@ -4,14 +4,6 @@ import matplotlib.pyplot as plt
 
 st.title('Easy Spectre Viewer')
 Path=st.sidebar.file_uploader('Excelファイル')
-Data=pd.ExcelFile(Path)
-Sheet_names=Data.sheet_names
-num_page=len(Sheet_names)
-defotate=2.0*num_page
-
-skip_rows=7
-x='Mass'
-y='Intensity'
 
 #@st.cache
 def get_spectre(Sheet_name,i):
@@ -20,13 +12,22 @@ def get_spectre(Sheet_name,i):
     ax[i].bar(df[x],df[y])
     #ax[i].grid(axis="y")
 
-fig,ax=plt.subplots(len(Sheet_names),1,figsize=(8.0,defotate),sharex=True,sharey=True)
+if Path is not None:
+    Data=pd.ExcelFile(Path)
+    Sheet_names=Data.sheet_names
+    num_page=len(Sheet_names)
+    defotate=2.0*num_page
+    skip_rows=7
+    x='Mass'
+    y='Intensity'
 
-for Sheet_name,i in zip(Sheet_names,range(len(Sheet_names))):
-    get_spectre(Sheet_name,i)
+    fig,ax=plt.subplots(len(Sheet_names),1,figsize=(8.0,defotate),sharex=True,sharey=True)
+
+    for Sheet_name,i in zip(Sheet_names,range(len(Sheet_names))):
+        get_spectre(Sheet_name,i)
     
-plt.xlabel("m/z")
-
-plt.ticklabel_format(useOffset=False,useMathText=True)
-
-st.pyplot(fig)
+    plt.xlabel("m/z")
+    plt.ticklabel_format(useOffset=False,useMathText=True)
+    st.pyplot(fig)
+else:
+    st.write("The spectre will be displayed when you upload the Excel file.")
